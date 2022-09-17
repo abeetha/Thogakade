@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="295.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.seekerscloud.pos.controller.DashboardFormController">
+   <children>
+      <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="14.0" onAction="#openCustomerFormOnAction" prefHeight="86.0" prefWidth="189.0" style="-fx-background-color: #1abc9c;" text="Customer Management" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="216.0" layoutY="14.0" onAction="#openItemFormOnAction" prefHeight="86.0" prefWidth="180.0" style="-fx-background-color: #2980b9;" text="Item Management" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="414.0" layoutY="14.0" onAction="#openOrderDetailsOnAction" prefHeight="86.0" prefWidth="180.0" style="-fx-background-color: #34495e;" text="Order Details" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="11.0" layoutY="111.0" onAction="#openPlaceOrderOnAction" prefHeight="124.0" prefWidth="578.0" style="-fx-background-color: #d35400;" text="Place Order" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="14.0" layoutY="264.0" text="Developed by:Seekerscloud" />
+      <Label layoutX="522.0" layoutY="264.0" text="Version:1.0.0" />
+   </children>
+</AnchorPane>
