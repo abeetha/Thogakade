@@ -5,30 +5,39 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="295.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.seekerscloud.pos.controller.DashboardFormController">
+<AnchorPane fx:id="dashboardContext" prefHeight="282.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.seekerscloud.pos.controller.DashboardFormController">
    <children>
-      <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="14.0" onAction="#openCustomerFormOnAction" prefHeight="86.0" prefWidth="189.0" style="-fx-background-color: #1abc9c;" text="Customer Management" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="12.0" layoutY="53.0" onAction="#openCustomerFormOnAction" prefHeight="86.0" prefWidth="232.0" style="-fx-background-color: #1abc9c;" text="Customer Management" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="216.0" layoutY="14.0" onAction="#openItemFormOnAction" prefHeight="86.0" prefWidth="180.0" style="-fx-background-color: #2980b9;" text="Item Management" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="250.0" layoutY="53.0" onAction="#openItemFormOnAction" prefHeight="86.0" prefWidth="225.0" style="-fx-background-color: #2980b9;" text="Item Management" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="414.0" layoutY="14.0" onAction="#openOrderDetailsOnAction" prefHeight="86.0" prefWidth="180.0" style="-fx-background-color: #34495e;" text="Order Details" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="482.0" layoutY="53.0" onAction="#openOrderDetailsFormOnAction" prefHeight="86.0" prefWidth="217.0" style="-fx-background-color: #34495e;" text="Order Details" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="11.0" layoutY="111.0" onAction="#openPlaceOrderOnAction" prefHeight="124.0" prefWidth="578.0" style="-fx-background-color: #d35400;" text="Place Order" textFill="WHITE">
+      <JFXButton buttonType="RAISED" layoutX="9.0" layoutY="150.0" onAction="#openPlaceOrderFormOnAction" prefHeight="98.0" prefWidth="689.0" style="-fx-background-color: #d35400;" text="Place Order" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
       </JFXButton>
-      <Label layoutX="14.0" layoutY="264.0" text="Developed by:Seekerscloud" />
-      <Label layoutX="522.0" layoutY="264.0" text="Version:1.0.0" />
+      <Label layoutX="12.0" layoutY="256.0" text="Developed by:Seekerscloud" />
+      <Label layoutX="632.0" layoutY="256.0" text="Version:1.0.0" />
+      <Label layoutX="12.0" layoutY="12.0" text="Thogakade-Developer Stack ">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTime" alignment="CENTER" layoutX="533.0" layoutY="12.0" text="10:20:25">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
