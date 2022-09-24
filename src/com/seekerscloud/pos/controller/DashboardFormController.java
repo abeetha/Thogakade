@@ -39,13 +39,15 @@ public class DashboardFormController {
         setUi("CustomerForm");
     }
 
-    public void openItemFormOnAction(ActionEvent actionEvent) {
+    public void openItemFormOnAction(ActionEvent actionEvent) throws IOException {
+        setUi("ItemForm");
     }
 
     public void openOrderDetailsFormOnAction(ActionEvent actionEvent) {
     }
 
-    public void openPlaceOrderFormOnAction(ActionEvent actionEvent) {
+    public void openPlaceOrderFormOnAction(ActionEvent actionEvent) throws IOException {
+        setUi("PlaceOrderForm");
     }
 
     private void setUi(String ui) throws IOException {
