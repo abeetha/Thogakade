@@ -16,23 +16,37 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.sql.*;
 import java.util.Optional;
 
 public class CustomerFormController {
+
     public TextField txtId;
+
     public TextField txtAddress;
+
     public TextField txtName;
+
     public TextField txtSalary;
 
     public TableColumn colId;
+
     public TableColumn colName;
+
     public TableColumn colAddress;
+
     public TableColumn colSalary;
+
     public TableColumn colOption;
+
     public TableView<CustomerTm> tblCustomer;
+
     public JFXButton btnSaveCustomer;
+
     public AnchorPane customerFormContext;
+
     public TextField txtSearch;
+
     private String searchText = "";
 
 
@@ -97,14 +111,31 @@ public class CustomerFormController {
         Customer c1 = new Customer(txtId.getText(), txtName.getText(), txtAddress.getText(), Double.parseDouble(txtSalary.getText()));
 
         if (btnSaveCustomer.getText().equalsIgnoreCase("Save Customer")) {
-            boolean isSaved = Database.customerTable.add(c1);
-            if (isSaved) {
-                searchCustomers(searchText);
-                clearFields();
-                new Alert(Alert.AlertType.INFORMATION, "Customer Saved!").show();
-            } else {
-                new Alert(Alert.AlertType.WARNING, "Try Again!").show();
-            }
+           try {
+               Class.forName("com.mysql.cj.jdbc.Driver");
+               Connection connection =  DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade",
+                       "root","1234");
+
+               String sql="INSERT INTO Customer Values(?,?,?,?)";
+               PreparedStatement statement = connection.prepareStatement(sql);
+               statement.setString(1,c1.getId());
+               statement.setString(2,c1.getName());
+               statement.setString(3,c1.getAddress());
+               statement.setDouble(4,c1.getSalary());
+
+               if (statement.executeUpdate(sql)>0) {
+                   searchCustomers(searchText);
+                   clearFields();
+                   new Alert(Alert.AlertType.INFORMATION, "Customer Saved!").show();
+               } else {
+                   new Alert(Alert.AlertType.WARNING, "Try Again!").show();
+               }
+
+           }catch (ClassNotFoundException | SQLException e){
+               e.printStackTrace();
+           }
+
+
         } else {
             for (int i = 0; i < Database.customerTable.size(); i++) {
                 if (txtId.getText().equalsIgnoreCase(Database.customerTable.get(i).getId())) {

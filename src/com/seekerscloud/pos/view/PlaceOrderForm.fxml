@@ -12,9 +12,9 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="558.0" prefWidth="729.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.seekerscloud.pos.controller.PlaceOrderFormController">
+<AnchorPane fx:id="placeOrderFormContext" prefHeight="558.0" prefWidth="729.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.seekerscloud.pos.controller.PlaceOrderFormController">
    <children>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #34495e;" text="Back to Home" textFill="WHITE">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToHomeOnAction" style="-fx-background-color: #34495e;" text="Back to Home" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -25,7 +25,7 @@
          </font>
       </Label>
       <Separator layoutX="135.0" layoutY="44.0" prefHeight="3.0" prefWidth="587.0" />
-      <TextField editable="false" layoutX="14.0" layoutY="67.0" promptText="Order Id " />
+      <TextField fx:id="txtOrderId" editable="false" layoutX="14.0" layoutY="67.0" promptText="Order Id " />
       <TextField fx:id="txtDate" editable="false" layoutX="566.0" layoutY="67.0" promptText="Order Date" />
       <Label layoutX="14.0" layoutY="103.0" text="Customer Details" textFill="#860f0f">
          <font>
@@ -62,12 +62,12 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="89.0" layoutY="499.0" text="0.00" textFill="#800e0e">
+      <Label fx:id="lblTotal" layoutX="89.0" layoutY="499.0" text="0.00" textFill="#800e0e">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="620.0" layoutY="493.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" style="-fx-background-color: #16a085;" text="Place Order" textFill="WHITE" />
+      <Button layoutX="620.0" layoutY="493.0" mnemonicParsing="false" onAction="#placeOrderOnAction" prefHeight="31.0" prefWidth="95.0" style="-fx-background-color: #16a085;" text="Place Order" textFill="WHITE" />
    </children>
    <cursor>
       <Cursor fx:constant="HAND" />
