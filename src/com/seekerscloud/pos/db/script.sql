@@ -11,4 +11,27 @@ CREATE TABLE IF NOT EXISTS Customer(
     salary DOUBLE,
     CONSTRAINT PRIMARY KEY(id)
 );
-
+CREATE TABLE IF NOT EXISTS Item(
+    code VARCHAR(45),
+    description VARCHAR(45),
+    unitPrice DOUBLE,
+    qtyOnHand INT,
+    CONSTRAINT PRIMARY KEY(code)
+);
+CREATE TABLE IF NOT EXISTS `Order`(
+    orderId VARCHAR(45),
+    date VARCHAR(250),
+    totalCost DOUBLE,
+    customer VARCHAR(45),
+    CONSTRAINT PRIMARY KEY (orderId),
+    CONSTRAINT FOREIGN KEY (customer) REFERENCES Customer(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE TABLE IF NOT EXISTS `Order Details`(
+    itemCode VARCHAR(45),
+    orderId VARCHAR(45),
+    unitPrice DOUBLE,
+    qty INT,
+    CONSTRAINT PRIMARY KEY (itemcode, orderId),
+    CONSTRAINT FOREIGN KEY (itemcode) REFERENCES Item(code) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY (itemcode) REFERENCES `Order`(orderId) ON DELETE CASCADE ON UPDATE CASCADE
+);
