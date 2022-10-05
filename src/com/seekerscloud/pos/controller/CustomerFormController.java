@@ -1,6 +1,7 @@
 package com.seekerscloud.pos.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.seekerscloud.pos.db.DBConnection;
 import com.seekerscloud.pos.db.Database;
 import com.seekerscloud.pos.modal.Customer;
 import com.seekerscloud.pos.view.tm.CustomerTm;
@@ -82,11 +83,8 @@ public class CustomerFormController {
         String searchText="%"+text+"%";
         try {
             ObservableList<CustomerTm> tmList = FXCollections.observableArrayList();
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade",
-                    "root", "1234");
             String sql = "SELECT*FROM Customer WHERE name LIKE ? || address LIKE ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = DBConnection.getInstance().getConnection().prepareStatement(sql);
             statement.setString(1,searchText);
             statement.setString(2,searchText);
             ResultSet set = statement.executeQuery();
@@ -106,11 +104,8 @@ public class CustomerFormController {
                         Optional<ButtonType> buttonType = alert.showAndWait();
                         if (buttonType.get() == ButtonType.YES) {
                          try {
-                             Class.forName("com.mysql.cj.jdbc.Driver");
-                             Connection connection1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade",
-                                     "root", "1234");
                              String sql1 = "DELETE FROM Customer WHERE id=?;";
-                             PreparedStatement statement1 = connection1.prepareStatement(sql1);
+                             PreparedStatement statement1 =  DBConnection.getInstance().getConnection().prepareStatement(sql1);
                              statement1.setString(1,tm.getId());
                              if ( statement.executeUpdate()>0) {
                                  searchCustomers(searchText);
@@ -135,11 +130,8 @@ public class CustomerFormController {
 
         if (btnSaveCustomer.getText().equalsIgnoreCase("Save Customer")) {
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade",
-                        "root", "1234");
                 String sql = "INSERT INTO Customer VALUES(?,?,?,?)";
-                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement =  DBConnection.getInstance().getConnection().prepareStatement(sql);
                 statement.setString(1, c1.getId());
                 statement.setString(2, c1.getName());
                 statement.setString(3, c1.getAddress());
@@ -156,11 +148,8 @@ public class CustomerFormController {
             }
         } else {
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade",
-                        "root", "1234");
                 String sql = "UPDATE Customer SET name=?,address=?,salary=? WHERE id=?";
-                PreparedStatement statement = connection.prepareStatement(sql);
+                PreparedStatement statement =  DBConnection.getInstance().getConnection().prepareStatement(sql);
                 statement.setString(1, c1.getName());
                 statement.setString(2, c1.getAddress());
                 statement.setDouble(3, c1.getSalary());

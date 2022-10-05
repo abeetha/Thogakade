@@ -8,14 +8,14 @@ public class OrderTm {
     private String orderId;
     private String name;
     private Date date;
-    double total;
+    private Double total;
     private Button btn;
 
     public OrderTm() {
 
     }
 
-    public OrderTm(String orderId, String name, Date date, double total, Button btn) {
+    public OrderTm(String orderId, String name, Date date, Double total, Button btn) {
         this.orderId = orderId;
         this.name = name;
         this.date = date;
@@ -53,5 +53,13 @@ public class OrderTm {
 
     public void setBtn(Button btn) {
         this.btn = btn;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 }
