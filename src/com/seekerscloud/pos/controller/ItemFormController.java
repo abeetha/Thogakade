@@ -1,11 +1,8 @@
 package com.seekerscloud.pos.controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.seekerscloud.pos.db.DBConnection;
-import com.seekerscloud.pos.db.Database;
-import com.seekerscloud.pos.modal.Customer;
-import com.seekerscloud.pos.modal.Item;
-import com.seekerscloud.pos.view.tm.CustomerTm;
+import com.seekerscloud.pos.dao.custom.impl.ItemDaoImpl;
+import com.seekerscloud.pos.entity.Item;
 import com.seekerscloud.pos.view.tm.ItemTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class ItemFormController {
@@ -78,18 +76,13 @@ public class ItemFormController {
     }
 
     public void saveItemOnAction(ActionEvent actionEvent) {
-        Item i1 = new Item(txtCode.getText(), txtDescription.getText(), Double.parseDouble(txtUnitPrice.getText()),
-                Integer.parseInt(txtQtyOnHand.getText()));
-
         if (btnSaveItem.getText().equalsIgnoreCase("Save Item")) {
             try {
-                String sql = "INSERT INTO Item VALUES(?,?,?,?)";
-                PreparedStatement statement =  DBConnection.getInstance().getConnection().prepareStatement(sql);
-                statement.setString(1, i1.getCode());
-                statement.setString(2, i1.getDescription());
-                statement.setDouble(3, i1.getUnitPrice());
-                statement.setInt(4, i1.getQtyOnHand());
-                if (statement.executeUpdate() > 0) {
+             boolean isItemSaved = new ItemDaoImpl().save(
+                     new Item(txtCode.getText(),
+                             txtDescription.getText(), Double.parseDouble(txtUnitPrice.getText()),
+                        Integer.parseInt(txtQtyOnHand.getText())));
+                if (isItemSaved) {
                     searchItems(searchText);
                     clearFields();
                     new Alert(Alert.AlertType.INFORMATION, "Item Saved!").show();
@@ -101,14 +94,11 @@ public class ItemFormController {
             }
         } else {
             try {
-
-                String sql = "UPDATE Item SET description=?,unitPrice=?,qtyOnHand=? WHERE code=?";
-                PreparedStatement statement =  DBConnection.getInstance().getConnection().prepareStatement(sql);
-                statement.setString(1, i1.getDescription());
-                statement.setDouble(2, i1.getUnitPrice());
-                statement.setInt(3, i1.getQtyOnHand());
-                statement.setString(4, i1.getCode());
-                if (statement.executeUpdate() > 0) {
+                boolean isItemSaved = new ItemDaoImpl().update(
+                        new Item(txtCode.getText(),
+                                txtDescription.getText(), Double.parseDouble(txtUnitPrice.getText()),
+                                Integer.parseInt(txtQtyOnHand.getText())));
+                if (isItemSaved) {
                     searchItems(searchText);
                     clearFields();
                     new Alert(Alert.AlertType.INFORMATION, "Customer Updated!").show();
@@ -132,17 +122,14 @@ public class ItemFormController {
         String searchText = "%" + text + "%";
         try {
             ObservableList<ItemTm> tmList = FXCollections.observableArrayList();
-            String sql = "SELECT*FROM Item WHERE description LIKE ?";
-            PreparedStatement statement =  DBConnection.getInstance().getConnection().prepareStatement(sql);
-            statement.setString(1, searchText);
-            ResultSet set = statement.executeQuery();
-            while (set.next()) {
+            ArrayList<Item> itemList=new ItemDaoImpl().searchItems(searchText);
+            for (Item i:itemList) {
                 Button btn = new Button("Delete");
                 ItemTm tm = new ItemTm(
-                        set.getString(1),
-                        set.getString(2),
-                        set.getDouble(3),
-                        set.getInt(4),
+                        i.getCode(),
+                        i.getDescription(),
+                        i.getUnitPrice(),
+                        i.getQtyOnHand(),
                         btn);
                 tmList.add(tm);
                 btn.setOnAction(event -> {
@@ -152,10 +139,8 @@ public class ItemFormController {
                     Optional<ButtonType> buttonType = alert.showAndWait();
                     if (buttonType.get() == ButtonType.YES) {
                         try {
-                            String sql1 = "DELETE FROM Item WHERE code=?";
-                            PreparedStatement statement1 =  DBConnection.getInstance().getConnection().prepareStatement(sql1);
-                            statement1.setString(1, tm.getCode());
-                            if (statement1.executeUpdate() > 0) {
+
+                            if (new ItemDaoImpl().delete(tm.getCode())) {
                                 searchItems(searchText);
                                 new Alert(Alert.AlertType.INFORMATION, "Item Deleted!").show();
                             } else {

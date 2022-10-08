@@ -1,25 +1,19 @@
 package com.seekerscloud.pos.controller;
 
 import com.seekerscloud.pos.db.DBConnection;
-import com.seekerscloud.pos.db.Database;
-import com.seekerscloud.pos.modal.Customer;
-import com.seekerscloud.pos.modal.Item;
 import com.seekerscloud.pos.modal.ItemDetails;
 import com.seekerscloud.pos.modal.Order;
 import com.seekerscloud.pos.view.tm.CartTm;
-import com.seekerscloud.pos.view.tm.ItemTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
