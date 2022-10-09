@@ -112,10 +112,6 @@ public class PlaceOrderFormController {
         }catch(SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
-        if(Database.orderTable.isEmpty()){
-
-        }
-
     }
 
     private void setItemDetails() {

@@ -1,7 +1,14 @@
 package com.seekerscloud.pos.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.seekerscloud.pos.bo.custom.BoFactory;
+import com.seekerscloud.pos.bo.custom.BoTypes;
+import com.seekerscloud.pos.bo.custom.ItemBo;
+import com.seekerscloud.pos.dao.DaoFactory;
+import com.seekerscloud.pos.dao.DaoTypes;
+import com.seekerscloud.pos.dao.custom.ItemDao;
 import com.seekerscloud.pos.dao.custom.impl.ItemDaoImpl;
+import com.seekerscloud.pos.dto.ItemDto;
 import com.seekerscloud.pos.entity.Item;
 import com.seekerscloud.pos.view.tm.ItemTm;
 import javafx.collections.FXCollections;
@@ -33,6 +40,8 @@ public class ItemFormController {
     public TableColumn colUnitPrice;
     public TableColumn colQtyOnHand;
     public TableColumn colOption;
+
+    private ItemBo itemBo = BoFactory.getInstance().getBo(BoTypes.ITEM);
 
     private String searchText = "";
 
@@ -78,8 +87,8 @@ public class ItemFormController {
     public void saveItemOnAction(ActionEvent actionEvent) {
         if (btnSaveItem.getText().equalsIgnoreCase("Save Item")) {
             try {
-             boolean isItemSaved = new ItemDaoImpl().save(
-                     new Item(txtCode.getText(),
+             boolean isItemSaved = itemBo.saveItem(
+                     new ItemDto(txtCode.getText(),
                              txtDescription.getText(), Double.parseDouble(txtUnitPrice.getText()),
                         Integer.parseInt(txtQtyOnHand.getText())));
                 if (isItemSaved) {
@@ -94,11 +103,11 @@ public class ItemFormController {
             }
         } else {
             try {
-                boolean isItemSaved = new ItemDaoImpl().update(
-                        new Item(txtCode.getText(),
+                boolean isItemUpdated =  itemBo.updateItem(
+                        new ItemDto(txtCode.getText(),
                                 txtDescription.getText(), Double.parseDouble(txtUnitPrice.getText()),
                                 Integer.parseInt(txtQtyOnHand.getText())));
-                if (isItemSaved) {
+                if (isItemUpdated) {
                     searchItems(searchText);
                     clearFields();
                     new Alert(Alert.AlertType.INFORMATION, "Customer Updated!").show();
@@ -122,8 +131,8 @@ public class ItemFormController {
         String searchText = "%" + text + "%";
         try {
             ObservableList<ItemTm> tmList = FXCollections.observableArrayList();
-            ArrayList<Item> itemList=new ItemDaoImpl().searchItems(searchText);
-            for (Item i:itemList) {
+            ArrayList<ItemDto> itemList= itemBo.searchItems(searchText);
+            for (ItemDto i:itemList) {
                 Button btn = new Button("Delete");
                 ItemTm tm = new ItemTm(
                         i.getCode(),
@@ -139,8 +148,7 @@ public class ItemFormController {
                     Optional<ButtonType> buttonType = alert.showAndWait();
                     if (buttonType.get() == ButtonType.YES) {
                         try {
-
-                            if (new ItemDaoImpl().delete(tm.getCode())) {
+                            if (itemBo.deleteItem(tm.getCode())) {
                                 searchItems(searchText);
                                 new Alert(Alert.AlertType.INFORMATION, "Item Deleted!").show();
                             } else {
