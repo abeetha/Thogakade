@@ -1,10 +1,32 @@
 package com.seekerscloud.pos.entity;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "item")
 public class Item implements SuperEntity{
+
+    @Id
+    @Column(name = "item_code")
     private String code;
+
+    @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "unit_price", nullable = false)
     private double unitPrice;
+
+    @Column(name = "qty_on_hand", nullable = false)
     private int qtyOnHand;
+
+
+    @OneToMany(mappedBy = "item", cascade = {
+            CascadeType.ALL
+    })
+    private List<OrderDetails> details = new ArrayList<>();
+
 
     public Item() {
     }
@@ -14,6 +36,14 @@ public class Item implements SuperEntity{
         this.description = description;
         this.unitPrice = unitPrice;
         this.qtyOnHand = qtyOnHand;
+    }
+
+    public List<OrderDetails> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<OrderDetails> details) {
+        this.details = details;
     }
 
     public String getCode() {
